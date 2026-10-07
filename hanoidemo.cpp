@@ -67,6 +67,9 @@ struct CustomPriorityQueue {
 };
 
 const int Max = 200005; // Fixed stack limit to handle n >= 100000
+
+//
+
 const long long int IFN = 1e18;
 
 int n, m;
@@ -78,6 +81,8 @@ void addEdge(int u, int v, long long w) {
     if (u < 1 || u > n || v < 1 || v > n) {
         throw out_of_range("Station index out of range!");
     }
+
+    if(u == v) return;
     // Edge case: Duplicate keys 
     for (auto& edge : adj[u]) {
         if (edge.first == v) {
@@ -143,6 +148,8 @@ int main(){
         cout << "Cannot open hanoidemo2.txt\n";
         return 1;
     }*/
+    if(!(fin >> n >> m)) throw runtime_error("Invalid file header");
+    
     fin >> n >> m;
     int target_n = n; // Save n read from file
     cout << "  - Input dataset loaded: n = " << n << " stations, m = " << m << " lines.\n\n";
@@ -201,6 +208,7 @@ int main(){
     fin.close();
     fin.open("hanoidemo.txt");
     fin >> n >> m; 
+    if(n >= Max) throw out_of_range("n exceeds Max capacity");
     resetGraph();
 
     cout << "[STEP 4] Stress Test & Profiling (n = " << n << "):\n";
